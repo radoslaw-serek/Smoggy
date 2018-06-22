@@ -12,6 +12,11 @@
 		E947D6F020DADB6300762B50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E947D6EE20DADB6300762B50 /* Main.storyboard */; };
 		E947D6F220DADB6900762B50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E947D6F120DADB6900762B50 /* Assets.xcassets */; };
 		E947D6F520DADB6900762B50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E947D6F320DADB6900762B50 /* LaunchScreen.storyboard */; };
+		E947D6FE20DADBCA00762B50 /* Smog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6FD20DADBCA00762B50 /* Smog.swift */; };
+		E947D70020DADEF800762B50 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6FF20DADEF800762B50 /* DataService.swift */; };
+		E947D70220DAECAC00762B50 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D70120DAECAC00762B50 /* LocationService.swift */; };
+		E947D70420DD8B4000762B50 /* FilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D70320DD8B3F00762B50 /* FilePersistence.swift */; };
+		E947D70620DD98F100762B50 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D70520DD98F100762B50 /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		E947D6F120DADB6900762B50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E947D6F420DADB6900762B50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E947D6F620DADB6900762B50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E947D6FD20DADBCA00762B50 /* Smog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smog.swift; sourceTree = "<group>"; };
+		E947D6FF20DADEF800762B50 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		E947D70120DAECAC00762B50 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		E947D70320DD8B3F00762B50 /* FilePersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePersistence.swift; sourceTree = "<group>"; };
+		E947D70520DD98F100762B50 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +64,27 @@
 		E947D6E920DADB6300762B50 /* Smoggy */ = {
 			isa = PBXGroup;
 			children = (
-				E947D6EA20DADB6300762B50 /* AppDelegate.swift */,
 				E947D6EC20DADB6300762B50 /* ViewController.swift */,
+				E947D6FD20DADBCA00762B50 /* Smog.swift */,
+				E947D70320DD8B3F00762B50 /* FilePersistence.swift */,
+				E947D6FF20DADEF800762B50 /* DataService.swift */,
+				E947D70120DAECAC00762B50 /* LocationService.swift */,
+				E947D70520DD98F100762B50 /* Location.swift */,
 				E947D6EE20DADB6300762B50 /* Main.storyboard */,
+				E947D6FC20DADB7800762B50 /* SupportingFiles */,
+			);
+			path = Smoggy;
+			sourceTree = "<group>";
+		};
+		E947D6FC20DADB7800762B50 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				E947D6EA20DADB6300762B50 /* AppDelegate.swift */,
 				E947D6F120DADB6900762B50 /* Assets.xcassets */,
 				E947D6F320DADB6900762B50 /* LaunchScreen.storyboard */,
 				E947D6F620DADB6900762B50 /* Info.plist */,
 			);
-			path = Smoggy;
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +158,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E947D70420DD8B4000762B50 /* FilePersistence.swift in Sources */,
 				E947D6ED20DADB6300762B50 /* ViewController.swift in Sources */,
 				E947D6EB20DADB6300762B50 /* AppDelegate.swift in Sources */,
+				E947D70220DAECAC00762B50 /* LocationService.swift in Sources */,
+				E947D6FE20DADBCA00762B50 /* Smog.swift in Sources */,
+				E947D70020DADEF800762B50 /* DataService.swift in Sources */,
+				E947D70620DD98F100762B50 /* Location.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,7 +310,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WN97JPQ8U9;
-				INFOPLIST_FILE = Smoggy/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Smoggy/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,7 +328,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WN97JPQ8U9;
-				INFOPLIST_FILE = Smoggy/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Smoggy/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

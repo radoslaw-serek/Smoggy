@@ -10,16 +10,39 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let dataService = DataService()
+    var smogData = Smog() {
+        didSet {
+            smogPM10Label.text = String(smogData.airQualityIndex)
+        }
+    }
+    
+    @IBOutlet weak var smogPM10Label: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        dataService.delegate = self
     }
 
 
+    
+    private func handleError(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction.init(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+}
+
+extension ViewController: DataServiceDelegate {
+    func dataService(_ dataService: DataService, didFetchData smogData: Smog) {
+        self.smogData = smogData
+    }
+    
+    func dataService(_ dataService: DataService, didFailWithError error: Error) {
+        handleError(error)
+    }
+    
+    
 }
 
