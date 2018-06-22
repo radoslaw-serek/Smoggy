@@ -13,6 +13,9 @@ protocol LocationDelegate {
 }
 class LocationService {
     
+    var delegate: LocationDelegate?
+    
+    
     
 }
 
