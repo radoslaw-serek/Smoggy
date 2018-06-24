@@ -10,17 +10,16 @@ import Foundation
 
 struct Smog: Codable {
     
-    let airQualityIndex: Double = 0
-    let humidity: Double = 0
-    let measurementTime: String = ""
-    let pm1: Double = 0
-    let pm10: Double = 0
-    let pm25: Double = 0
-    let pollutionLevel: Double = 0
-    let pressure: Double = 0
-    let temperature: Double = 0
-    let windDirection: Double = 0
-    let windSpeed: Double = 0
+    var currentMeasurements = CurrentMeasurements()
     
-    
+    struct CurrentMeasurements: Codable {
+        var airQualityIndex: Double = 0
+        var pm1: Double = 0
+        var pm10: Double = 0
+        var pm25: Double = 0
+        var pressure: Double = 0
+        var humidity: Double = 0
+        var temperature: Double = 0
+        var pollutionLevel: Double = 0
+    }
 }

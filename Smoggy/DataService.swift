@@ -13,26 +13,21 @@ protocol DataServiceDelegate {
     func dataService(_ dataService: DataService, didFetchData smogData: Smog)
     func dataService(_ dataService: DataService, didFailWithError error: Error)
 }
-class DataService {
+class DataService: LocationDelegate {
     
     private let rootURL = "https://airapi.airly.eu"
     private let apiKey = "xyLjMQ6mafMM8IaxR22Zl4fvaQ2JoYS0"
-    private var endpoint = "/v1/mapPoint/measurements?" //Get air quality index and historical data for any point on a map
     private let acceptHeader = "application/json"
+    private var endpoint = "/v1/mapPoint/measurements?" //Get air quality index and historical data for any point on a map
     private let dataPersistence = FilePersistence()
     var delegate: DataServiceDelegate?
     private var location = Location()
     private var locationPointString: String {
-        return "latitude="+String(location.point.latitude)+"&longtitude="+String(location.point.longtitude)
+        return "latitude="+String(location.point.latitude)+"&longitude="+String(location.point.longtitude)
     }
     private var finalUrl: String {
         return rootURL+endpoint+locationPointString
     }
-    
-//    private var locationRectString: String {
-//        return "southwestLat="+String(location.rect.southwestLat)+"&southwestLong="+String(location.rect.southwestLong)+"&northeastLat="+String(location.rect.northeastLat)+"&northeastLong="+String(location.rect.northeastLong)
-//    }
-    
 
     private func convertDataToJson(data: Data) {
         let decoder = JSONDecoder()
@@ -45,10 +40,11 @@ class DataService {
         }
     }
     
-    private func fetchData() {
+    func fetchData() {
         let url = URL(string: finalUrl)
         var request = URLRequest(url: url!)
         request.addValue(apiKey, forHTTPHeaderField: "apikey")
+        request.addValue(acceptHeader, forHTTPHeaderField: "Content-Type")
         request.addValue(acceptHeader, forHTTPHeaderField: "Accept")
         let session = URLSession.shared
         let task = session.dataTask(with: request) { [weak self] (data, response, error) in
