@@ -1,5 +1,5 @@
 //
-//  DataService.swift
+//  DataAndLocationService.swift
 //  Smoggy
 //
 //  Created by Radosław Serek on 20.06.2018.
@@ -7,13 +7,15 @@
 //
 
 import Foundation
+import CoreLocation
 
 
 protocol DataServiceDelegate {
-    func dataService(_ dataService: DataService, didFetchData smogData: Smog)
-    func dataService(_ dataService: DataService, didFailWithError error: Error)
+    func dataService(_ dataService: DataAndLocationService, didFetchData smogData: Smog)
+    func dataService(_ dataService: DataAndLocationService, didFailWithError error: Error)
 }
-class DataService: LocationDelegate {
+
+class DataAndLocationService: NSObject {
     
     private let rootURL = "https://airapi.airly.eu"
     private let apiKey = "xyLjMQ6mafMM8IaxR22Zl4fvaQ2JoYS0"
@@ -21,12 +23,20 @@ class DataService: LocationDelegate {
     private var endpoint = "/v1/mapPoint/measurements?" //Get air quality index and historical data for any point on a map
     private let dataPersistence = FilePersistence()
     var delegate: DataServiceDelegate?
-    private var location = Location()
-    private var locationPointString: String {
-        return "latitude="+String(location.point.latitude)+"&longitude="+String(location.point.longtitude)
+    private var locationManager = CLLocationManager()
+    
+//    private let locationService = LocationService()
+    private var location = CLLocation() {
+        didSet {
+            fetchData()
+        }
+    }
+    
+    private var locationCoordinateString: String {
+        return "latitude="+String(location.coordinate.latitude)+"&longitude="+String(location.coordinate.longitude)
     }
     private var finalUrl: String {
-        return rootURL+endpoint+locationPointString
+        return rootURL+endpoint+locationCoordinateString
     }
 
     private func convertDataToJson(data: Data) {
@@ -40,7 +50,15 @@ class DataService: LocationDelegate {
         }
     }
     
-    func fetchData() {
+    func getLocationThenFetchData() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse, CLLocationManager.locationServicesEnabled() {
+            locationManager.requestLocation()
+        }
+    }
+    
+    private func fetchData() {
         let url = URL(string: finalUrl)
         var request = URLRequest(url: url!)
         request.addValue(apiKey, forHTTPHeaderField: "apikey")
@@ -76,4 +94,13 @@ class DataService: LocationDelegate {
     }
 }
 
+extension DataAndLocationService: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.location = locations[0]
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
+}
 

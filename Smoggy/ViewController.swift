@@ -8,15 +8,16 @@
 
 import UIKit
 
+
 class ViewController: UIViewController {
 
-    let dataService = DataService()
+    let dataAndLocationService = DataAndLocationService()
     var smogData = Smog() {
         didSet {
             airQualityIndexLabel.text = "CAQI: \n"+String(Int(smogData.currentMeasurements.airQualityIndex.rounded()))
             pm1Label.text = "PM1: \n"+String(Int(smogData.currentMeasurements.pm1.rounded()))
+            pm25Label.text = "PM2.5: \n"+String(Int(smogData.currentMeasurements.pm25.rounded()))
             pm10Label.text = "PM10: \n"+String(Int(smogData.currentMeasurements.pm10.rounded()))
-            pm25Label.text = "PM25: \n"+String(Int(smogData.currentMeasurements.pm25.rounded()))
             temperatureLabel.text = "Temp: \n"+String(Int(smogData.currentMeasurements.temperature.rounded()))+"℃"
             pressureLabel.text = "Pressure: \n"+String(Int(smogData.currentMeasurements.pressure.rounded()/100))+"hPa"
             humidityLabel.text = "Humidity: \n"+String(Int(smogData.currentMeasurements.humidity.rounded()))+"%"
@@ -24,6 +25,7 @@ class ViewController: UIViewController {
     }
     
     private func configureLabelsColor() {
+        
         var smogLabelColor = UIColor()
         var tempLabelColor = UIColor()
         switch smogData.currentMeasurements.pm10 {
@@ -41,7 +43,6 @@ class ViewController: UIViewController {
         }
 
         setLabelsColor(with: (smogLabelColor,tempLabelColor))
-        
     }
     
     private func setLabelsColor(with labelColors: (smogLabelColor: UIColor,tempLabelColor: UIColor)) {
@@ -54,42 +55,36 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var airQualityIndexLabel: UILabel!
     @IBOutlet weak var pm1Label: UILabel!
-    @IBOutlet weak var pm10Label: UILabel!
     @IBOutlet weak var pm25Label: UILabel!
+    @IBOutlet weak var pm10Label: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        dataService.fetchData()
+        dataAndLocationService.getLocationThenFetchData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataService.delegate = self
+        dataAndLocationService.delegate = self
         configureLabelsColor()
     }
-
-
     
     private func handleError(_ error: Error) {
         let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-
 }
 
 extension ViewController: DataServiceDelegate {
-    func dataService(_ dataService: DataService, didFetchData smogData: Smog) {
+    func dataService(_ dataService: DataAndLocationService, didFetchData smogData: Smog) {
         self.smogData = smogData
     }
     
-    func dataService(_ dataService: DataService, didFailWithError error: Error) {
+    func dataService(_ dataService: DataAndLocationService, didFailWithError error: Error) {
         handleError(error)
     }
-    
-    
 }
-
