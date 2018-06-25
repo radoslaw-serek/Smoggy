@@ -10,9 +10,9 @@ import Foundation
 import CoreLocation
 
 
-protocol DataServiceDelegate {
-    func dataService(_ dataService: DataAndLocationService, didFetchData smogData: Smog)
-    func dataService(_ dataService: DataAndLocationService, didFailWithError error: Error)
+protocol DataAndLocationServiceDelegate {
+    func dataAndLocationService(_ dataAndLocationService: DataAndLocationService, didFetchData smogData: Smog)
+    func dataAndLocationService(_ dataAndLocationService: DataAndLocationService, didFailWithError error: Error)
 }
 
 class DataAndLocationService: NSObject {
@@ -22,10 +22,9 @@ class DataAndLocationService: NSObject {
     private let acceptHeader = "application/json"
     private var endpoint = "/v1/mapPoint/measurements?" //Get air quality index and historical data for any point on a map
     private let dataPersistence = FilePersistence()
-    var delegate: DataServiceDelegate?
+    var delegate: DataAndLocationServiceDelegate?
     private var locationManager = CLLocationManager()
-    
-//    private let locationService = LocationService()
+    private var geocoder = CLGeocoder()
     private var location = CLLocation() {
         didSet {
             fetchData()
@@ -44,13 +43,26 @@ class DataAndLocationService: NSObject {
         if let smogData = try? decoder.decode(Smog.self, from: data) {
             dataPersistence.storeData(smogData: smogData)
             DispatchQueue.main.async {
-                self.delegate?.dataService(self, didFetchData: smogData)
+                self.delegate?.dataAndLocationService(self, didFetchData: smogData)
             }
-            print("Smog data stored in file")
         }
     }
     
+    func getLocationThenFetchData(locationFrom address: String) {
+        geocoder.geocodeAddressString(address) { (placemarks, error) in
+            if error != nil {
+                print("Geocoder failed due to \(error?.localizedDescription ?? "unknown error")")
+            }
+            if let location = placemarks?.first?.location {
+                self.location = location
+            }
+        }
+        
+    }
+    
     func getLocationThenFetchData() {
+        let data = dataPersistence.getData()
+        self.delegate?.dataAndLocationService(self, didFetchData: data)
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse, CLLocationManager.locationServicesEnabled() {
@@ -69,18 +81,18 @@ class DataAndLocationService: NSObject {
             if let error = error {
                 if let smogData = self?.dataPersistence.getData(){
                     DispatchQueue.main.async {
-                        self?.delegate?.dataService(self!, didFetchData: smogData)
+                        self?.delegate?.dataAndLocationService(self!, didFetchData: smogData)
                     }
                     print(error.localizedDescription)
                 } else {
-                    self?.delegate?.dataService(self!, didFailWithError: error)
+                    self?.delegate?.dataAndLocationService(self!, didFailWithError: error)
                     print(error.localizedDescription)
                 }
             }
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
                 if let smogData = self?.dataPersistence.getData() {
                     DispatchQueue.main.async {
-                        self?.delegate?.dataService(self!, didFetchData: smogData)
+                        self?.delegate?.dataAndLocationService(self!, didFetchData: smogData)
                     }
                 }
                 print(response?.description ?? "Server error")

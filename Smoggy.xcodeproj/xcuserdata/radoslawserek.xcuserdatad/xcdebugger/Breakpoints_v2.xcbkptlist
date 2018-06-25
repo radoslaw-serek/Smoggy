@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Smoggy/ViewController.swift"
-            timestampString = "551576990.108474"
+            timestampString = "551658145.2607369"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "dataService(_:didFetchData:)"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "dataAndLocationService(_:didFetchData:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Smoggy/ViewController.swift"
-            timestampString = "551576990.109095"
+            timestampString = "551658145.260991"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "20"

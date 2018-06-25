@@ -61,6 +61,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var pressureLabel: UILabel!
     @IBOutlet weak var humidityLabel: UILabel!
     
+    @IBOutlet weak var addressTextField: UITextField!
+    
+    @IBOutlet weak var addressLabel: UILabel!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         dataAndLocationService.getLocationThenFetchData()
@@ -68,8 +72,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.addressTextField.delegate = self
         dataAndLocationService.delegate = self
         configureLabelsColor()
+        addressLabel.isHidden = true
     }
     
     private func handleError(_ error: Error) {
@@ -79,12 +85,24 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: DataServiceDelegate {
-    func dataService(_ dataService: DataAndLocationService, didFetchData smogData: Smog) {
+extension ViewController: DataAndLocationServiceDelegate {
+    func dataAndLocationService(_ dataService: DataAndLocationService, didFetchData smogData: Smog) {
         self.smogData = smogData
     }
     
-    func dataService(_ dataService: DataAndLocationService, didFailWithError error: Error) {
+    func dataAndLocationService(_ dataService: DataAndLocationService, didFailWithError error: Error) {
         handleError(error)
+    }
+}
+
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        addressLabel.text = textField.text
+        addressLabel.isHidden = false
+        if let address = textField.text {
+            dataAndLocationService.getLocationThenFetchData(locationFrom: address)
+        }
+        textField.resignFirstResponder()
+        return true
     }
 }
