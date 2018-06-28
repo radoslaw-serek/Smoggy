@@ -13,13 +13,13 @@ struct SmogData: Codable {
     let currentMeasurements: CurrentMeasurements
     
     struct CurrentMeasurements: Codable {
-        var airQualityIndex: Double
-        var pm1: Double
-        var pm10: Double
-        var pm25: Double
-        var pressure: Double
-        var humidity: Double
-        var temperature: Double
-        var pollutionLevel: Double
+        let airQualityIndex: Double
+        let pm1: Double
+        let pm10: Double
+        let pm25: Double
+        let pressure: Double
+        let humidity: Double
+        let temperature: Double
+        let pollutionLevel: Double
     }
 }
