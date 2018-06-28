@@ -10,21 +10,21 @@ import Foundation
 import CoreLocation
 
 
-protocol DataAndLocationServiceDelegate {
-    func dataAndLocationService(_ dataAndLocationService: DataAndLocationService, didFetchData smogData: Smog)
-    func dataAndLocationService(_ dataAndLocationService: DataAndLocationService, didFailWithError error: Error)
+protocol DataServiceDelegate: class {
+    func dataAndLocationService(_ dataAndLocationService: DataService, didFetchData smogData: Smog)
+    func dataAndLocationService(_ dataAndLocationService: DataService, didFailWithError error: Error)
 }
 
-class DataAndLocationService: NSObject {
+class DataService: NSObject {
     
     private let rootURL = "https://airapi.airly.eu"
     private let apiKey = "xyLjMQ6mafMM8IaxR22Zl4fvaQ2JoYS0"
     private let acceptHeader = "application/json"
-    private var endpoint = "/v1/mapPoint/measurements?" //Get air quality index and historical data for any point on a map
+    private let endpoint = "/v1/mapPoint/measurements?" //Get air quality index and historical data for any point on a map
     private let dataPersistence = FilePersistence()
-    var delegate: DataAndLocationServiceDelegate?
-    private var locationManager = CLLocationManager()
-    private var geocoder = CLGeocoder()
+    weak var delegate: DataServiceDelegate?
+    private let locationManager = CLLocationManager()
+    private let geocoder = CLGeocoder()
     private var location = CLLocation() {
         didSet {
             fetchData()
@@ -57,12 +57,12 @@ class DataAndLocationService: NSObject {
                 self.location = location
             }
         }
-        
     }
     
     func getLocationThenFetchData() {
-        let data = dataPersistence.getData()
-        self.delegate?.dataAndLocationService(self, didFetchData: data)
+        if let data = dataPersistence.getData() {
+            self.delegate?.dataAndLocationService(self, didFetchData: data)
+        }
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse, CLLocationManager.locationServicesEnabled() {
@@ -106,7 +106,7 @@ class DataAndLocationService: NSObject {
     }
 }
 
-extension DataAndLocationService: CLLocationManagerDelegate {
+extension DataService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.location = locations[0]
     }
