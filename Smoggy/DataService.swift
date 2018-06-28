@@ -117,5 +117,7 @@ extension DataService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         self.delegate?.dataService(self, didFailWithErrorDuringAddressGeocoding: error)
     }
+    
+    
 }
 
