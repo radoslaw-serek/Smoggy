@@ -12,32 +12,34 @@ import CoreLocation
 
 protocol DataServiceDelegate: class {
     func dataService(_ dataService: DataService, didFetchData smogData: SmogData)
-    func dataService(_ dataService: DataService, didFailWithErrorDuringDataDownload error: Error)
-    func dataService(_ dataService: DataService, didFailWithErrorDuringAddressGeocoding error: Error)
-    func dataService(_ dataService: DataService, didFailWithErrorDuringLocationAuthorizationRetrieval failed: Bool)
+    func dataService(_ dataService: DataService, didFailWithErrorDuringDataDownload: Bool)
+    func dataService(_ dataService: DataService, didFailWithErrorDuringAddressGeocoding: Bool)
+    func dataService(_ dataService: DataService, didFailWithErrorDuringLocationAuthorizationRetrieval: Bool)
 }
 
 class DataService: NSObject {
     
-    private let rootURL = "https://airapi.airly.eu"
     private let apiKey = "xyLjMQ6mafMM8IaxR22Zl4fvaQ2JoYS0"
     private let acceptHeader = "application/json"
-    private let endpoint = "/v1/mapPoint/measurements?" //Get air quality index and historical data for any point on a map
     private let dataPersistence = FilePersistence()
-    weak var delegate: DataServiceDelegate?
     private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
     private var location = CLLocation() {
         didSet {
-            fetchData()
+            if location == oldValue, let data = dataPersistence.getData() {
+                delegate?.dataService(self, didFetchData: data)
+            } else {
+                fetchData()
+            }
         }
     }
+    weak var delegate: DataServiceDelegate?
     
-    private var locationCoordinateString: String {
-        return "latitude="+String(location.coordinate.latitude)+"&longitude="+String(location.coordinate.longitude)
-    }
-    private var finalUrl: String {
-        return rootURL+endpoint+locationCoordinateString
+    private func composeUrlForLocation() -> URL? {
+        let rootURL = "https://airapi.airly.eu"
+        let endpoint = "/v1/mapPoint/measurements?" //Get air quality index and historical data for any point on a map
+        let locationString = "latitude="+String(location.coordinate.latitude)+"&longitude="+String(location.coordinate.longitude)
+        return URL(string: rootURL+endpoint+locationString)
     }
 
     private func convertDataToJson(data: Data) {
@@ -47,24 +49,27 @@ class DataService: NSObject {
             DispatchQueue.main.async {
                 self.delegate?.dataService(self, didFetchData: smogData)
             }
+        } else {
+            DispatchQueue.main.async {
+                self.delegate?.dataService(self, didFailWithErrorDuringDataDownload: true)
+            }
         }
     }
     
     func getLocationThenFetchData(locationFrom address: String) {
         geocoder.geocodeAddressString(address) { (placemarks, error) in
-            if let error = error {
-                self.delegate?.dataService(self, didFailWithErrorDuringAddressGeocoding: error)
+            if error != nil {
+                self.delegate?.dataService(self, didFailWithErrorDuringAddressGeocoding: true)
             }
-            if let location = placemarks?.first?.location {
-                self.location = location
+            guard let location = placemarks?.first?.location else {
+                self.delegate?.dataService(self, didFailWithErrorDuringAddressGeocoding: true)
+                return
             }
+            self.location = location
         }
     }
     
     func getLocationThenFetchData() {
-        if let data = dataPersistence.getData() {
-            self.delegate?.dataService(self, didFetchData: data)
-        }
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.authorizationStatus() == .denied {
@@ -76,21 +81,22 @@ class DataService: NSObject {
     }
     
     private func fetchData() {
-        let url = URL(string: finalUrl)
-        var request = URLRequest(url: url!)
+        guard let url = composeUrlForLocation() else {return}
+        var request = URLRequest(url: url)
         request.addValue(apiKey, forHTTPHeaderField: "apikey")
         request.addValue(acceptHeader, forHTTPHeaderField: "Content-Type")
         request.addValue(acceptHeader, forHTTPHeaderField: "Accept")
         let session = URLSession.shared
         let task = session.dataTask(with: request) { [unowned self] (data, response, error) in
-            if let error = error {
+            if error != nil {
                 if let smogData = self.dataPersistence.getData(){
                     DispatchQueue.main.async {
                         self.delegate?.dataService(self, didFetchData: smogData)
                     }
                 } else {
-                    self.delegate?.dataService(self, didFailWithErrorDuringDataDownload: error)
-                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        self.delegate?.dataService(self, didFailWithErrorDuringDataDownload: true)
+                    }
                 }
             }
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
@@ -115,7 +121,7 @@ extension DataService: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        self.delegate?.dataService(self, didFailWithErrorDuringAddressGeocoding: error)
+        self.delegate?.dataService(self, didFailWithErrorDuringAddressGeocoding: true)
     }
     
     

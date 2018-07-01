@@ -14,19 +14,41 @@ class ViewController: UIViewController {
     let dataService = DataService()
     var smogData: SmogData? {
         didSet {
-            configureLabelsColor()
-            airQualityIndexLabel.text = "CAQI: \n"+String(Int((smogData?.currentMeasurements.airQualityIndex.rounded())!))
-            pm1Label.text = "PM1: \n"+String(Int((smogData?.currentMeasurements.pm1.rounded())!))
-            pm25Label.text = "PM2.5: \n"+String(Int((smogData?.currentMeasurements.pm25.rounded())!))
-            pm10Label.text = "PM10: \n"+String(Int((smogData?.currentMeasurements.pm10.rounded())!))
-            temperatureLabel.text = "Temp: \n"+String(Int((smogData?.currentMeasurements.temperature.rounded())!))+"℃"
-            pressureLabel.text = "Pressure: \n"+String(Int((smogData?.currentMeasurements.pressure.rounded())!/100))+"hPa"
-            humidityLabel.text = "Humidity: \n"+String(Int((smogData?.currentMeasurements.humidity.rounded())!))+"%"
             getDataActivityIndicatorView.stopAnimating()
+            configureSmogDataLabelsColor()
+            configureSmogDataLabels()
         }
     }
     
-    private func configureLabelsColor() {
+    @IBOutlet weak var airQualityIndexLabel: UILabel!
+    @IBOutlet weak var pm1Label: UILabel!
+    @IBOutlet weak var pm25Label: UILabel!
+    @IBOutlet weak var pm10Label: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var pressureLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    
+    @IBOutlet weak var getDataActivityIndicatorView: UIActivityIndicatorView!
+    
+    @IBOutlet weak var addressTextField: UITextField!
+    
+    @IBOutlet weak var addressLabel: UILabel!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getDataActivityIndicatorView.startAnimating()
+        dataService.getLocationThenFetchData()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.addressTextField.delegate = self
+        dataService.delegate = self
+        configureSmogDataLabelsColor()
+        addressLabel.isHidden = true
+    }
+    
+    private func configureSmogDataLabelsColor() {
         
         var smogLabelColor = UIColor.black
         var tempLabelColor = UIColor.black
@@ -57,35 +79,30 @@ class ViewController: UIViewController {
         temperatureLabel.textColor = labelColors.tempLabelColor
     }
     
-    @IBOutlet weak var airQualityIndexLabel: UILabel!
-    @IBOutlet weak var pm1Label: UILabel!
-    @IBOutlet weak var pm25Label: UILabel!
-    @IBOutlet weak var pm10Label: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var pressureLabel: UILabel!
-    @IBOutlet weak var humidityLabel: UILabel!
-    
-    @IBOutlet weak var getDataActivityIndicatorView: UIActivityIndicatorView!
-    
-    @IBOutlet weak var addressTextField: UITextField!
-    
-    @IBOutlet weak var addressLabel: UILabel!
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        getDataActivityIndicatorView.startAnimating()
-        dataService.getLocationThenFetchData()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.addressTextField.delegate = self
-        dataService.delegate = self
-        configureLabelsColor()
-        addressLabel.isHidden = true
+    private func configureSmogDataLabels() {
+        if smogData != nil {
+            airQualityIndexLabel.text = "CAQI: \n"+String(Int((smogData?.currentMeasurements.airQualityIndex.rounded())!))
+            pm1Label.text = "PM1: \n"+String(Int((smogData?.currentMeasurements.pm1.rounded())!))
+            pm25Label.text = "PM2.5: \n"+String(Int((smogData?.currentMeasurements.pm25.rounded())!))
+            pm10Label.text = "PM10: \n"+String(Int((smogData?.currentMeasurements.pm10.rounded())!))
+            temperatureLabel.text = "Temp: \n"+String(Int((smogData?.currentMeasurements.temperature.rounded())!))+"℃"
+            pressureLabel.text = "Pressure: \n"+String(Int((smogData?.currentMeasurements.pressure.rounded())!/100))+"hPa"
+            humidityLabel.text = "Humidity: \n"+String(Int((smogData?.currentMeasurements.humidity.rounded())!))+"%"
+        } else {
+            airQualityIndexLabel.text = "CAQI: \n?"
+            pm1Label.text = "PM1: \n?"
+            pm25Label.text = "PM2.5: \n?"
+            pm10Label.text = "PM10: \n?"
+            temperatureLabel.text = "Temp: \n?"
+            pressureLabel.text = "Pressure: \n?"
+            humidityLabel.text = "Humidity: \n?"
+        }
     }
     
     private func handleError(_ description: String) {
+        addressLabel.isHidden = true
+        smogData = nil
+        getDataActivityIndicatorView.stopAnimating()
         let alert = UIAlertController(title: "Error", message: description, preferredStyle: .alert)
         alert.addAction(UIAlertAction.init(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
@@ -97,24 +114,21 @@ extension ViewController: DataServiceDelegate {
         self.smogData = smogData
     }
     
-    func dataService(_ dataService: DataService, didFailWithErrorDuringDataDownload error: Error) {
-        handleError(error.localizedDescription)
+    func dataService(_ dataService: DataService, didFailWithErrorDuringDataDownload: Bool) {
+        if didFailWithErrorDuringDataDownload {
+            handleError("Could not retrieve data for given location\nPlease try again")
+        }
     }
     
-    func dataService(_ dataService: DataService, didFailWithErrorDuringAddressGeocoding error: Error) {
-        addressLabel.text = "Could not retrieve location from given address, please try again"
-        addressLabel.isHidden = false
-        handleError("Could not retrieve location from given address")
-        getDataActivityIndicatorView.stopAnimating()
+    func dataService(_ dataService: DataService, didFailWithErrorDuringAddressGeocoding: Bool) {
+        if didFailWithErrorDuringAddressGeocoding {
+            handleError("Could not retrieve location from given address\nPlease try again")
+        }
     }
     
-    func dataService(_ dataService: DataService, didFailWithErrorDuringLocationAuthorizationRetrieval failed: Bool) {
-        if failed {
-            addressLabel.text = "Authorization failed.\nPlease specify desired location for smog data"
-            let alert = UIAlertController(title: "Error", message: "Authorization failed \n Please specify desired location for smog data", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            addressLabel.isHidden = false
+    func dataService(_ dataService: DataService, didFailWithErrorDuringLocationAuthorizationRetrieval: Bool) {
+        if didFailWithErrorDuringLocationAuthorizationRetrieval {
+            handleError("Authorization failed\nPlease specify desired location for smog data")
         }
     }
 }
@@ -128,7 +142,6 @@ extension ViewController: UITextFieldDelegate {
             dataService.getLocationThenFetchData(locationFrom: address)
         }
         textField.resignFirstResponder()
-        getDataActivityIndicatorView.stopAnimating()
         return true
     }
     
