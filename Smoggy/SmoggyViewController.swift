@@ -8,17 +8,17 @@
 
 import UIKit
 
-
 class SmoggyViewController: UIViewController {
 
     let dataService = DataService()
-    var smogData: SmogData? {
+    public var smogData: SmogData? {
         didSet {
             getDataActivityIndicatorView.stopAnimating()
             configureSmogDataLabelsColor()
             configureSmogDataLabels()
         }
     }
+    
     
     @IBOutlet weak var airQualityIndexLabel: UILabel!
     @IBOutlet weak var pm1Label: UILabel!
@@ -98,6 +98,7 @@ class SmoggyViewController: UIViewController {
             humidityLabel.text = "Humidity: \n?"
         }
     }
+
     
     private func handleError(_ description: String) {
         addressLabel.isHidden = true

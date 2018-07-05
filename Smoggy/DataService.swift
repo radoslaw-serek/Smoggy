@@ -56,6 +56,10 @@ class DataService: NSObject {
         }
     }
     
+    public func getSmogDataFromPersistence() -> SmogData? {
+        return dataPersistence.getData()
+    }
+    
     func getLocationThenFetchData(locationFrom address: String) {
         geocoder.geocodeAddressString(address) { (placemarks, error) in
             if error != nil {

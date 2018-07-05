@@ -8,19 +8,52 @@
 
 /* Begin PBXBuildFile section */
 		E947D6EB20DADB6300762B50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6EA20DADB6300762B50 /* AppDelegate.swift */; };
-		E947D6ED20DADB6300762B50 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6EC20DADB6300762B50 /* ViewController.swift */; };
+		E947D6ED20DADB6300762B50 /* SmoggyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6EC20DADB6300762B50 /* SmoggyViewController.swift */; };
 		E947D6F020DADB6300762B50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E947D6EE20DADB6300762B50 /* Main.storyboard */; };
 		E947D6F220DADB6900762B50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E947D6F120DADB6900762B50 /* Assets.xcassets */; };
 		E947D6F520DADB6900762B50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E947D6F320DADB6900762B50 /* LaunchScreen.storyboard */; };
 		E947D6FE20DADBCA00762B50 /* SmogData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6FD20DADBCA00762B50 /* SmogData.swift */; };
 		E947D70020DADEF800762B50 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6FF20DADEF800762B50 /* DataService.swift */; };
 		E947D70420DD8B4000762B50 /* FilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D70320DD8B3F00762B50 /* FilePersistence.swift */; };
+		E9CCA77020ED4743003EF49B /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CCA76F20ED4743003EF49B /* NotificationCenter.framework */; };
+		E9CCA77320ED4743003EF49B /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CCA77220ED4743003EF49B /* TodayViewController.swift */; };
+		E9CCA77620ED4743003EF49B /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9CCA77420ED4743003EF49B /* MainInterface.storyboard */; };
+		E9CCA77A20ED4743003EF49B /* Smoggy Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E9CCA76D20ED4743003EF49B /* Smoggy Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E9CCA78020ED4752003EF49B /* SmogData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6FD20DADBCA00762B50 /* SmogData.swift */; };
+		E9CCA78120ED4756003EF49B /* FilePersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D70320DD8B3F00762B50 /* FilePersistence.swift */; };
+		E9CCA78220ED4759003EF49B /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6FF20DADEF800762B50 /* DataService.swift */; };
+		E9CCA78320ED50AD003EF49B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E947D6F120DADB6900762B50 /* Assets.xcassets */; };
+		E9CCA78420ED5ABB003EF49B /* SmoggyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E947D6EC20DADB6300762B50 /* SmoggyViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E9CCA77820ED4743003EF49B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E947D6DF20DADB6300762B50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E9CCA76C20ED4743003EF49B;
+			remoteInfo = "Smoggy Widget";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E9CCA77E20ED4743003EF49B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E9CCA77A20ED4743003EF49B /* Smoggy Widget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E947D6E720DADB6300762B50 /* Smoggy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smoggy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E947D6EA20DADB6300762B50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E947D6EC20DADB6300762B50 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E947D6EC20DADB6300762B50 /* SmoggyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmoggyViewController.swift; sourceTree = "<group>"; };
 		E947D6EF20DADB6300762B50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E947D6F120DADB6900762B50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E947D6F420DADB6900762B50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -28,6 +61,13 @@
 		E947D6FD20DADBCA00762B50 /* SmogData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmogData.swift; sourceTree = "<group>"; };
 		E947D6FF20DADEF800762B50 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		E947D70320DD8B3F00762B50 /* FilePersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePersistence.swift; sourceTree = "<group>"; };
+		E9CCA76D20ED4743003EF49B /* Smoggy Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Smoggy Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9CCA76F20ED4743003EF49B /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		E9CCA77220ED4743003EF49B /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		E9CCA77520ED4743003EF49B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		E9CCA77720ED4743003EF49B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E9CCA78720EE962D003EF49B /* Smoggy Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smoggy Widget.entitlements"; sourceTree = "<group>"; };
+		E9CCA78820EE9635003EF49B /* Smoggy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Smoggy.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +78,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9CCA76A20ED4743003EF49B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9CCA77020ED4743003EF49B /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -45,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				E947D6E920DADB6300762B50 /* Smoggy */,
+				E9CCA77120ED4743003EF49B /* Smoggy Widget */,
+				E9CCA76E20ED4743003EF49B /* Frameworks */,
 				E947D6E820DADB6300762B50 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				E947D6E720DADB6300762B50 /* Smoggy.app */,
+				E9CCA76D20ED4743003EF49B /* Smoggy Widget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,7 +111,8 @@
 		E947D6E920DADB6300762B50 /* Smoggy */ = {
 			isa = PBXGroup;
 			children = (
-				E947D6EC20DADB6300762B50 /* ViewController.swift */,
+				E9CCA78820EE9635003EF49B /* Smoggy.entitlements */,
+				E947D6EC20DADB6300762B50 /* SmoggyViewController.swift */,
 				E947D6FD20DADBCA00762B50 /* SmogData.swift */,
 				E947D70320DD8B3F00762B50 /* FilePersistence.swift */,
 				E947D6FF20DADEF800762B50 /* DataService.swift */,
@@ -81,6 +133,25 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		E9CCA76E20ED4743003EF49B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E9CCA76F20ED4743003EF49B /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E9CCA77120ED4743003EF49B /* Smoggy Widget */ = {
+			isa = PBXGroup;
+			children = (
+				E9CCA78720EE962D003EF49B /* Smoggy Widget.entitlements */,
+				E9CCA77220ED4743003EF49B /* TodayViewController.swift */,
+				E9CCA77420ED4743003EF49B /* MainInterface.storyboard */,
+				E9CCA77720ED4743003EF49B /* Info.plist */,
+			);
+			path = "Smoggy Widget";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -91,15 +162,34 @@
 				E947D6E320DADB6300762B50 /* Sources */,
 				E947D6E420DADB6300762B50 /* Frameworks */,
 				E947D6E520DADB6300762B50 /* Resources */,
+				E9CCA77E20ED4743003EF49B /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E9CCA77920ED4743003EF49B /* PBXTargetDependency */,
 			);
 			name = Smoggy;
 			productName = Smoggy;
 			productReference = E947D6E720DADB6300762B50 /* Smoggy.app */;
 			productType = "com.apple.product-type.application";
+		};
+		E9CCA76C20ED4743003EF49B /* Smoggy Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E9CCA77D20ED4743003EF49B /* Build configuration list for PBXNativeTarget "Smoggy Widget" */;
+			buildPhases = (
+				E9CCA76920ED4743003EF49B /* Sources */,
+				E9CCA76A20ED4743003EF49B /* Frameworks */,
+				E9CCA76B20ED4743003EF49B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Smoggy Widget";
+			productName = "Smoggy Widget";
+			productReference = E9CCA76D20ED4743003EF49B /* Smoggy Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -113,6 +203,19 @@
 				TargetAttributes = {
 					E947D6E620DADB6300762B50 = {
 						CreatedOnToolsVersion = 9.4;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					E9CCA76C20ED4743003EF49B = {
+						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -130,6 +233,7 @@
 			projectRoot = "";
 			targets = (
 				E947D6E620DADB6300762B50 /* Smoggy */,
+				E9CCA76C20ED4743003EF49B /* Smoggy Widget */,
 			);
 		};
 /* End PBXProject section */
@@ -145,6 +249,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9CCA76B20ED4743003EF49B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9CCA78320ED50AD003EF49B /* Assets.xcassets in Resources */,
+				E9CCA77620ED4743003EF49B /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -153,14 +266,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				E947D70420DD8B4000762B50 /* FilePersistence.swift in Sources */,
-				E947D6ED20DADB6300762B50 /* ViewController.swift in Sources */,
+				E947D6ED20DADB6300762B50 /* SmoggyViewController.swift in Sources */,
 				E947D6EB20DADB6300762B50 /* AppDelegate.swift in Sources */,
 				E947D6FE20DADBCA00762B50 /* SmogData.swift in Sources */,
 				E947D70020DADEF800762B50 /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E9CCA76920ED4743003EF49B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E9CCA78120ED4756003EF49B /* FilePersistence.swift in Sources */,
+				E9CCA77320ED4743003EF49B /* TodayViewController.swift in Sources */,
+				E9CCA78020ED4752003EF49B /* SmogData.swift in Sources */,
+				E9CCA78420ED5ABB003EF49B /* SmoggyViewController.swift in Sources */,
+				E9CCA78220ED4759003EF49B /* DataService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E9CCA77920ED4743003EF49B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E9CCA76C20ED4743003EF49B /* Smoggy Widget */;
+			targetProxy = E9CCA77820ED4743003EF49B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E947D6EE20DADB6300762B50 /* Main.storyboard */ = {
@@ -177,6 +310,14 @@
 				E947D6F420DADB6900762B50 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E9CCA77420ED4743003EF49B /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E9CCA77520ED4743003EF49B /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -299,7 +440,9 @@
 		E947D6FA20DADB6900762B50 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Smoggy/Smoggy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WN97JPQ8U9;
 				INFOPLIST_FILE = "$(SRCROOT)/Smoggy/SupportingFiles/Info.plist";
@@ -317,7 +460,9 @@
 		E947D6FB20DADB6900762B50 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Smoggy/Smoggy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WN97JPQ8U9;
 				INFOPLIST_FILE = "$(SRCROOT)/Smoggy/SupportingFiles/Info.plist";
@@ -327,6 +472,46 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = radoslawserek.Smoggy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E9CCA77B20ED4743003EF49B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Smoggy Widget/Smoggy Widget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WN97JPQ8U9;
+				INFOPLIST_FILE = "Smoggy Widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "radoslawserek.Smoggy.Smoggy-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E9CCA77C20ED4743003EF49B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Smoggy Widget/Smoggy Widget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WN97JPQ8U9;
+				INFOPLIST_FILE = "Smoggy Widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "radoslawserek.Smoggy.Smoggy-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -349,6 +534,15 @@
 			buildConfigurations = (
 				E947D6FA20DADB6900762B50 /* Debug */,
 				E947D6FB20DADB6900762B50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E9CCA77D20ED4743003EF49B /* Build configuration list for PBXNativeTarget "Smoggy Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9CCA77B20ED4743003EF49B /* Debug */,
+				E9CCA77C20ED4743003EF49B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

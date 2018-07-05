@@ -10,12 +10,7 @@ import Foundation
 
 class FilePersistence {
 
-    private let fileName = "SmogData.json"
-    
-    private var fileUrl: URL? {
-        let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        return dir?.appendingPathComponent(fileName)
-    }
+    private let fileUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.sharingSmogDataWithExtension")?.appendingPathComponent("SmogData.json")
     
     func getData() -> SmogData? {
         let decoder = JSONDecoder()
@@ -37,5 +32,5 @@ class FilePersistence {
             }
         }
     }
-
 }
+
