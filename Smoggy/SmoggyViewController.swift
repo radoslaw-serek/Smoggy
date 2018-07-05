@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ViewController: UIViewController {
+class SmoggyViewController: UIViewController {
 
     let dataService = DataService()
     var smogData: SmogData? {
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: DataServiceDelegate {
+extension SmoggyViewController: DataServiceDelegate {
     func dataService(_ dataService: DataService, didFetchData smogData: SmogData) {
         self.smogData = smogData
     }
@@ -133,7 +133,7 @@ extension ViewController: DataServiceDelegate {
     }
 }
 
-extension ViewController: UITextFieldDelegate {
+extension SmoggyViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         addressLabel.text = "Address: "+textField.text!
         addressLabel.isHidden = false
